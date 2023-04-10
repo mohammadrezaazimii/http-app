@@ -1,0 +1,17 @@
+.selectedComment {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 5px 15px 0px;
+  padding: 30px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+}
+.choose {
+  text-align: center;
+  margin-top: 20px !important;
+}
