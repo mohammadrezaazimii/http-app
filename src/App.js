@@ -1,5 +1,5 @@
-import axios from "axios";
 import "./App.css";
+import React from "react";
 import Discussion from "./components/Discussion/Discussion";
 function App() {
   return (

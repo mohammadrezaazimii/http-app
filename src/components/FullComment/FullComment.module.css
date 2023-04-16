@@ -7,11 +7,31 @@
   padding: 30px;
 }
 
+.selectedComment button {
+  width: 100px;
+  height: 30px;
+  display: inline-block;
+  margin: 0 auto;
+  background-color: blueviolet;
+  outline: none;
+  border: 1px solid blueviolet;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.choose {
+  margin: 0 auto;
   display: flex;
   justify-content: center;
 }
-.choose {
-  text-align: center;
-  margin-top: 20px !important;
+.loading{
+  width: 120px;
+  /* color: blueviolet; */
+  /* height: 200px; */
 }
