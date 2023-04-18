@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from "react";
+import { Dots } from "loading-animations-react";
 import styles from "./Comment.module.css";
 import axios from "axios";
-const Comment = ({ setSelectedId, comments, setComments }) => {
+const Comment = ({ setSelectedId, comments, getComments }) => {
+  const [error, setError] = useState(false);
   useEffect(() => {
     axios
       .get("http://localhost:3001/comments")
-      .then((response) => setComments(response.data.slice(0, 5)))
-      .catch((error) => console.log(error));
+      .then((response) => {
+        getComments(response.data.slice(0, 5));
+        console.log("response: ", response.data);
+      })
+      .catch((error) => setError(true));
   }, []);
-
-  if (!comments) {
-    console.log("comment");
-    return <div>Loading ...</div>;
+  if (error) {
+    return (
+      <div style={{ margin: "30px auto", color: "red" }}>
+        featching data failed!
+      </div>
+    );
+  } else if (!comments) {
+    return (
+      <div style={{ margin: "20px auto" }}>
+        <Dots dotColors={["blueviolet"]} text="" className={styles.loading} />
+      </div>
+    );
   }
   if (comments)
     return (

@@ -2,25 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "./FullComment.module.css";
 import { Dots } from "loading-animations-react";
-const FullComment = ({ selectedId, setSelectedId, setComments }) => {
+const FullComment = ({ selectedId, setSelectedId, deleteComment }) => {
   const [selectedComment, setSelectedComment] = useState(null);
 
   let renderComponent = "";
   const deleteHandler = () => {
-    if (selectedId)
-      axios
-        .delete(`http://localhost:3001/comments/${selectedId}`)
-        .then((res) => {
-          console.log(res);
-          axios
-            .get("http://localhost:3001/comments")
-            .then((res) => {
-              setComments(res.data.slice(0, 5));
-              setSelectedId(null);
-            })
-            .catch((err) => console.log(err));
-        })
-        .catch((err) => console.log(err));
+    if (selectedId) {
+      deleteComment(selectedId);
+      setSelectedId(null);
+    }
   };
   useEffect(() => {
     setSelectedComment(null);

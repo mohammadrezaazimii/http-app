@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import styles from "./NewComment.module.css";
 import axios from "axios";
-const NewComment = ({ setComments }) => {
+const NewComment = ({ postComment }) => {
+
   const [formData, setFormData] = useState({ name: "", email: "", body: "" });
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const submitForm = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3001/comments", formData)
-      .then((res) => {
-        setFormData({ name: "", email: "", body: "" });
-        axios
-          .get("http://localhost:3001/comments")
-          .then((res) => setComments(res.data.slice(0, 5)))
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => alert(err));
+    postComment(formData);
+    setFormData({ name: "", email: "", body: "" });
   };
   return (
     <div className={styles.container}>
