@@ -2,26 +2,25 @@ import React, { useState } from "react";
 import Comment from "../Comment/Comment";
 import FullComment from "../FullComment/FullComment";
 import NewComment from "../NewComment/NewComment";
-import axios from "axios";
 import styles from "./Discussion.module.css";
+import { toast } from "react-toastify";
+import http from "../../services/http";
 
 const Discussion = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [comments, setComments] = useState(null);
   const getComments = (comments) => {
-    console.log(comments);
     setComments(comments);
   };
   const selectCommentHandler = (id) => {
     setSelectedId(id);
   };
   const deleteComment = (selectedId) => {
-    axios
-      .delete(`http://localhost:3001/comments/${selectedId}`)
+    http
+      .delete(`/comments/${selectedId}`)
       .then((res) => {
-        console.log(res);
-        axios
-          .get("http://localhost:3001/comments")
+        http
+          .get("/comments")
           .then((res) => {
             setComments(res.data.slice(0, 5));
           })
@@ -29,16 +28,33 @@ const Discussion = () => {
       })
       .catch((err) => console.log(err));
   };
-  const postComment = (newComment) => {
+  /*   const postComment = (newComment) => {
     axios
       .post("http://localhost:3001/comments", newComment)
       .then((res) => {
         axios
           .get("http://localhost:3001/comments")
-          .then((res) => setComments(res.data.slice(0, 5)))
+          .then((res) => {
+            {
+              setComments(res.data.slice(0, 5));
+              toast.success("کامنت شما با موفقیت ثبت شد");
+            }
+          })
           .catch((err) => console.log(err));
       })
       .catch((err) => alert(err));
+  }; */
+  const postComment = async (newComment) => {
+    try {
+      await http.post("/comments", newComment);
+      const { data } = await http.get("/comments");
+      setComments(data.slice(0, 5));
+      toast.success("کامنت شما با موفقیت ثبت شد.");
+      return 1;
+    } catch (error) {
+      toast.error(`${error.message}`);
+      return 0;
+    }
   };
   return (
     <div className={styles.container}>

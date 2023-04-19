@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import http from "../../services/http";
 import styles from "./FullComment.module.css";
 import { Dots } from "loading-animations-react";
 const FullComment = ({ selectedId, setSelectedId, deleteComment }) => {
@@ -15,8 +15,8 @@ const FullComment = ({ selectedId, setSelectedId, deleteComment }) => {
   useEffect(() => {
     setSelectedComment(null);
     if (selectedId) {
-      axios
-        .get(`http://localhost:3001/comments/${selectedId}`)
+      http
+        .get(`/comments/${selectedId}`)
         .then((response) => setSelectedComment(response.data))
         .catch((err) => console.log("error: ", err));
     }

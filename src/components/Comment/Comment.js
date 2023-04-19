@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Dots } from "loading-animations-react";
 import styles from "./Comment.module.css";
-import axios from "axios";
+import http from "../../services/http";
+import { toast } from "react-toastify";
 const Comment = ({ setSelectedId, comments, getComments }) => {
   const [error, setError] = useState(false);
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/comments")
+    http
+      .get("/comments")
       .then((response) => {
         getComments(response.data.slice(0, 5));
-        console.log("response: ", response.data);
       })
       .catch((error) => setError(true));
   }, []);
   if (error) {
+    toast.error("! اروری در دریافت کامنت ها وجود دارد");
     return (
       <div style={{ margin: "30px auto", color: "red" }}>
         featching data failed!

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import styles from "./NewComment.module.css";
-import axios from "axios";
 const NewComment = ({ postComment }) => {
-
   const [formData, setFormData] = useState({ name: "", email: "", body: "" });
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const submitForm = (e) => {
     e.preventDefault();
-    postComment(formData);
-    setFormData({ name: "", email: "", body: "" });
+    const msg = postComment(formData);
+    msg.then((res) => {
+      if (res) setFormData({ name: "", email: "", body: "" });
+    });
   };
   return (
     <div className={styles.container}>
