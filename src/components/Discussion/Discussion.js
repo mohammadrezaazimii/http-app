@@ -4,7 +4,12 @@ import FullComment from "../FullComment/FullComment";
 import NewComment from "../NewComment/NewComment";
 import styles from "./Discussion.module.css";
 import { toast } from "react-toastify";
-import http from "../../services/http";
+import http from "../../services/httpServices";
+import {
+  postNewComment,
+  getAllComments,
+  deleteOneComment,
+} from "../../services/axiosCommend";
 
 const Discussion = () => {
   const [selectedId, setSelectedId] = useState(null);
@@ -16,38 +21,21 @@ const Discussion = () => {
     setSelectedId(id);
   };
   const deleteComment = (selectedId) => {
-    http
-      .delete(`/comments/${selectedId}`)
+    deleteOneComment(selectedId)
       .then((res) => {
-        http
-          .get("/comments")
+        getAllComments()
           .then((res) => {
             setComments(res.data.slice(0, 5));
+            toast.success("کامنت موردنظر با موفقیت حذف شد");
           })
           .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   };
-  /*   const postComment = (newComment) => {
-    axios
-      .post("http://localhost:3001/comments", newComment)
-      .then((res) => {
-        axios
-          .get("http://localhost:3001/comments")
-          .then((res) => {
-            {
-              setComments(res.data.slice(0, 5));
-              toast.success("کامنت شما با موفقیت ثبت شد");
-            }
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => alert(err));
-  }; */
   const postComment = async (newComment) => {
     try {
-      await http.post("/comments", newComment);
-      const { data } = await http.get("/comments");
+      await postNewComment(newComment);
+      const { data } = await getAllComments();
       setComments(data.slice(0, 5));
       toast.success("کامنت شما با موفقیت ثبت شد.");
       return 1;

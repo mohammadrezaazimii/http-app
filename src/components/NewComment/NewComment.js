@@ -9,7 +9,7 @@ const NewComment = ({ postComment }) => {
     e.preventDefault();
     const msg = postComment(formData);
     msg.then((res) => {
-      if (res) setFormData({ name: "", email: "", body: "" });
+      res && setFormData({ name: "", email: "", body: "" });
     });
   };
   return (

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Dots } from "loading-animations-react";
 import styles from "./Comment.module.css";
-import http from "../../services/http";
 import { toast } from "react-toastify";
+import { getAllComments } from "../../services/axiosCommend";
 const Comment = ({ setSelectedId, comments, getComments }) => {
   const [error, setError] = useState(false);
   useEffect(() => {
-    http
-      .get("/comments")
+    getAllComments()
       .then((response) => {
         getComments(response.data.slice(0, 5));
       })
