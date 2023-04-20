@@ -5,12 +5,10 @@ const NewComment = ({ postComment }) => {
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const submitForm = (e) => {
+  const submitForm = async(e) => {
     e.preventDefault();
-    const msg = postComment(formData);
-    msg.then((res) => {
-      res && setFormData({ name: "", email: "", body: "" });
-    });
+    const msg = await postComment(formData);
+    msg && setFormData({ name: "", email: "", body: "" });
   };
   return (
     <div className={styles.container}>

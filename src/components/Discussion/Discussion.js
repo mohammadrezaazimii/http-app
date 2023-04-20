@@ -20,18 +20,28 @@ const Discussion = () => {
   const selectCommentHandler = (id) => {
     setSelectedId(id);
   };
-  const deleteComment = (selectedId) => {
-    deleteOneComment(selectedId)
-      .then((res) => getAllComments())
-      .then((res) => {
-        setComments(res.data.slice(0, 4));
-        toast.success(" کامنت موردنظر با موفقیت حذف شد");
-        return 1;
-      })
-      .catch((err) => {
-        toast.error(err.message)
-        return 0;
-      });
+  const deleteComment = async (selectedId) => {
+    try {
+      await deleteOneComment(selectedId);
+      const { data } = await getAllComments();
+      setComments(data.slice(0, 4));
+      toast.success("کامنت موردنظر با موفقیت حذف شد");
+      return 1;
+    } catch (error) {
+      toast.error(error.message);
+      return 0;
+    }
+    //  deleteOneComment(selectedId)
+    //   .then((res) => getAllComments())
+    //   .then((res) => {
+    //     setComments(res.data.slice(0, 4));
+    //     toast.success(" کامنت موردنظر با موفقیت حذف شد");
+    //     return 1;
+    //   })
+    //   .catch((err) => {
+    //     toast.error(err.message)
+    //     return 0;
+    //   });
   };
   const postComment = async (newComment) => {
     try {

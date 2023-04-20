@@ -3,13 +3,14 @@ import http from "../../services/httpServices";
 import styles from "./FullComment.module.css";
 import { Dots } from "loading-animations-react";
 import { getOneComment } from "../../services/axiosCommend";
+import { toast } from "react-toastify";
 const FullComment = ({ selectedId, setSelectedId, deleteComment }) => {
   const [selectedComment, setSelectedComment] = useState(null);
 
   let renderComponent = "";
-  const deleteHandler = () => {
+  const deleteHandler =async () => {
     if (selectedId) {
-      const msg= deleteComment(selectedId);
+      const msg = await deleteComment(selectedId);
       msg && setSelectedId(null);
     }
   };
@@ -18,7 +19,7 @@ const FullComment = ({ selectedId, setSelectedId, deleteComment }) => {
     if (selectedId) {
       getOneComment(selectedId)
         .then((response) => setSelectedComment(response.data))
-        .catch((err) => console.log("error: ", err));
+        .catch((err) => toast.error(err.message));
     }
   }, [selectedId]);
   if (!selectedId) {
