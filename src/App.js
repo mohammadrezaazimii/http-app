@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
   return (
     <div className="App">
-      <ToastContainer />
+      <ToastContainer style={{textAlign:'right'}} />
       <Discussion />
     </div>
   );

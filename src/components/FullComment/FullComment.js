@@ -9,8 +9,8 @@ const FullComment = ({ selectedId, setSelectedId, deleteComment }) => {
   let renderComponent = "";
   const deleteHandler = () => {
     if (selectedId) {
-      deleteComment(selectedId);
-      setSelectedId(null);
+      const msg= deleteComment(selectedId);
+      msg && setSelectedId(null);
     }
   };
   useEffect(() => {

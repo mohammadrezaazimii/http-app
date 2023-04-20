@@ -22,15 +22,16 @@ const Discussion = () => {
   };
   const deleteComment = (selectedId) => {
     deleteOneComment(selectedId)
+      .then((res) => getAllComments())
       .then((res) => {
-        getAllComments()
-          .then((res) => {
-            setComments(res.data.slice(0, 5));
-            toast.success("کامنت موردنظر با موفقیت حذف شد");
-          })
-          .catch((err) => console.log(err));
+        setComments(res.data.slice(0, 4));
+        toast.success(" کامنت موردنظر با موفقیت حذف شد");
+        return 1;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        toast.error(err.message)
+        return 0;
+      });
   };
   const postComment = async (newComment) => {
     try {

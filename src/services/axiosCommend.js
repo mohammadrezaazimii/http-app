@@ -10,5 +10,5 @@ export function postNewComment(newComment) {
   return http.post("/comments", newComment);
 }
 export function deleteOneComment(id) {
-  return http.delete(`comments/${id}`);
+  return http.delete(`comments/${id+100000}`);
 }
